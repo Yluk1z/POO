@@ -1,34 +1,40 @@
-import * as prompt from 'prompt-sync';
-
-class Personagem {
-  constructor(
-    public nome: string,
-    public energia: number,
-    public vida: number,
-    public ataque: number,
-    public defesa: number
-  ) {}
-
-  exibirStatus(): void {
-    console.log("-----Status do Personagem-----");
-    console.log("Nome: " + this.nome);
-    console.log("Ataque: " + this.ataque);
-    console.log("Defesa: " + this.defesa);
-    console.log("Energia: " + this.energia);
-    console.log("Vida: " + this.vida);
-    console.log("-------------------------------");
-  }
-}
+import Personagem from './main';
+import Mage from './Mage';
+import Priest from './Priest';
+import Warrior from './Warrior';
+import prompt from 'prompt-sync';
 
 let tecladouser = prompt();
 let opcion: number = 0;
-let player: Personagem | undefined;
+let person: Personagem | null = null;
 
-while (opcion != 5) {
+while (opcion !== 3) {
+  console.log("-------------Classe-----------");
+  console.log("[1]. Mage                     ");
+  console.log("[2]. Priest                   ");
+  console.log("[3]. Warrior                  ");
+  console.log("------------------------------");
+
+  opcion = +tecladouser("Escolha sua Classe de Personagem: ");
+
+  switch (opcion) {
+    case 1:
+      person = new Mage("Lucas, o Mago");
+      break;
+    case 2:
+      person = new Priest("Lucas, o Sacerdote");
+      break;
+    case 3:
+      person = new Warrior("Lucas, o Guerreiro");
+      break;
+  }
+
+  if (person) {
+while (opcion !== 5 && !person.isDead()) {
   console.log("---------Personagem-----------");
-  console.log("[1]. Criar Personagem         ");
-  console.log("[2]. Treinar Ataque           ");
-  console.log("[3]. Treinar Defesa           ");
+  console.log("[1]. Treinar Ataque           ");
+  console.log("[2]. Treinar Defesa           ");
+  console.log("[3]. Descansar                ");
   console.log("[4]. Status do Personagem     ");
   console.log("[5]. Sair                     ");
   console.log("------------------------------");
@@ -37,77 +43,34 @@ while (opcion != 5) {
 
   switch (opcion) {
     case 1:
-      if (player) {
-        console.log("Opção inválida. Personagem já criado.");
-        break;
-      }
-      let nomePersonagem = tecladouser("Digite o nome do seu personagem: ");
-      player = new Personagem(nomePersonagem, 100, 1000, 100, 80);
-      player.exibirStatus();
-      break;
+      console.log(person.comandoAttack());
+      let validarcomando: string = tecladouser("Insira a sequência do comando anterior (exemplo: 2 4): ");
+      person.validarComandoAttack(validarcomando);
+      console.log(person.status());
+
+  break;
     case 2:
-      if (!player) {
-        console.log("Opção inválida. Crie um personagem primeiro.");
-        break;
-      }
-      console.log("[1] 100 flexões [3] Correr 1 KM");
-      let comandoTreinoAtaque = tecladouser("Insira a sequência do comando anterior(exemplo: 2 4): ");
-      switch (comandoTreinoAtaque) {
-        case '1 3':
-          // Treino de ataque
-          player.ataque += 25;
-          console.log("                                    ");
-          console.log("-----Treino de ataque concluído-----");
-          console.log("----------Ataque aumentou!----------");
-          console.log("                                    ");
-          player.exibirStatus();
-          break;
-        default:
-          console.log("                                     ");
-          console.log("-----Comando de treino inválido.-----");
-          console.log("----------Ataque Diminuiu!-----------");
-          console.log("                                     ");
-          player.ataque -= 10;
-          player.exibirStatus();
-      }
-      break;
+      console.log(person.comandoDefence());
+      let sequenciaComandoDefense: string = tecladouser("Insira a sequência do comando anterior (exemplo: 2 4): ")
+      person.validarComandoDefense(sequenciaComandoDefense);
+      console.log(person.status());
+  break;
     case 3:
-      if (!player) {
-        console.log("Opção inválida. Crie um personagem primeiro.");
-        break;
-      }
-      console.log("[1] Treino de Bloqueio [4] treino de Base");
-      let comandoTreinoDefesa = tecladouser("Insira a sequência do comando anterior(exemplo: 2 4): ");
-      switch (comandoTreinoDefesa) {
-        case '1 4':
-          // Treino de Defesa
-          player.defesa += 45;
-          console.log("                                   ");
-          console.log("-----Treino de Defesa concluído----");
-          console.log("---------Defesa aumentou!----------");
-          console.log("                                   ");
-          player.exibirStatus();
-          break;
-        default:
-          console.log("                                     ");
-          console.log("-----Comando de treino inválido.-----");
-          console.log("----------Defesa Diminuiu!-----------");
-          console.log("                                     ");
-          player.defesa -= 20;
-          player.exibirStatus();
-      }
-      break;
+      let tempoDeDescanso: number = +tecladouser("Insira a quantidade de horas que você deseja desansar(somente o numero!):  ");
+      person.comandoDescansar(tempoDeDescanso)
+      console.log(person.status());
+  break;
     case 4:
-      if (!player) {
-        console.log("Opção inválida. Crie um personagem primeiro.");
-        break;
-      }
-      player.exibirStatus();
-      break;
+    console.log(person.status());
+  break;
     case 5:
-      console.log("Saindo...");
-      break;
-    default:
-      console.log("Opção inválida. Tente novamente.");
+      console.log("Até a proxima jornada guerreiro!")
+  break;
   }
+} 
+
+if (person.isDead()) {
+  console.log("OPS! Você morreu!");
+  }
+}
 }
