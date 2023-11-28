@@ -30,6 +30,7 @@ while (opcion !== 3) {
   }
 
   if (person) {
+    
 while (opcion !== 5 && !person.isDead()) {
   console.log("---------Personagem-----------");
   console.log("[1]. Treinar Ataque           ");
@@ -74,3 +75,5 @@ if (person.isDead()) {
   }
 }
 }
+  
+
