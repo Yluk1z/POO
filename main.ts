@@ -1,3 +1,4 @@
+
 export default abstract class Personagem  {
   constructor(
     public name: string,
