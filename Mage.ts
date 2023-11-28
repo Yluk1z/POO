@@ -6,7 +6,7 @@ export default class Mage extends Personagem {
     private _velocidade: number;
 
     constructor(nome: string) {
-        super(nome, 100, 800, 60, 35);
+        super(nome, 300, 800, 60, 35);
         this._intelecto = Util.randomizar(100, 600);
         this._velocidade = Util.randomizar(100, 600);
     }
