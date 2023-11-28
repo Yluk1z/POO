@@ -1,10 +1,36 @@
 import Personagem from './main';
+import Mage from './Mage';
+import Priest from './Priest';
+import Warrior from './Warrior';
 import prompt from 'prompt-sync';
 
 let tecladouser = prompt();
 let opcion: number = 0;
-let person = new Personagem("Lucas", 100,800,60,35);
+let person: Personagem | null = null;
 
+while (opcion !== 3) {
+  console.log("-------------Classe-----------");
+  console.log("[1]. Mage                     ");
+  console.log("[2]. Priest                   ");
+  console.log("[3]. Warrior                  ");
+  console.log("------------------------------");
+
+  opcion = +tecladouser("Escolha sua Classe de Personagem: ");
+
+  switch (opcion) {
+    case 1:
+      person = new Mage("Lucas, o Mago");
+      break;
+    case 2:
+      person = new Priest("Lucas, o Sacerdote");
+      break;
+    case 3:
+      person = new Warrior("Lucas, o Guerreiro");
+      break;
+  }
+
+  if (person) {
+    
 while (opcion !== 5 && !person.isDead()) {
   console.log("---------Personagem-----------");
   console.log("[1]. Treinar Ataque           ");
@@ -46,4 +72,8 @@ while (opcion !== 5 && !person.isDead()) {
 
 if (person.isDead()) {
   console.log("OPS! Você morreu!");
+  }
 }
+}
+  
+
