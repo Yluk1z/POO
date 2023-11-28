@@ -6,7 +6,7 @@ export default class Priest extends Personagem {
   private _versatilidade: number;
 
   constructor(nome: string) {
-    super(nome, 100, 800, 60, 35);
+    super(nome, 400, 800, 60, 35);
     this._espirito = Util.randomizar(100, 600);
     this._versatilidade = Util.randomizar(100, 600);
   }
